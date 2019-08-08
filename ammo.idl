@@ -522,10 +522,10 @@ interface btRigidBody {
   [Const, Ref] btVector3 getLinearFactor();
   void setLinearFactor([Const, Ref] btVector3 linearFactor);
   void applyTorque([Const, Ref] btVector3 torque);
-  void applyLocalTorque([Const, Ref] btVector3 torque);
+  //void applyLocalTorque([Const, Ref] btVector3 torque);
   void applyForce([Const, Ref] btVector3 force, [Const, Ref] btVector3 rel_pos);
   void applyCentralForce([Const, Ref] btVector3 force);
-  void applyCentralLocalForce([Const, Ref] btVector3 force);
+  //void applyCentralLocalForce([Const, Ref] btVector3 force);
   void applyTorqueImpulse([Const, Ref] btVector3 torque);
   void applyImpulse([Const, Ref] btVector3 impulse, [Const, Ref] btVector3 rel_pos);
   void applyCentralImpulse([Const, Ref] btVector3 impulse);
@@ -603,6 +603,26 @@ interface btGeneric6DofSpringConstraint {
   void setEquilibriumPoint();
 };
 btGeneric6DofSpringConstraint implements btGeneric6DofConstraint;
+
+interface btGeneric6DofSpring2Constraint {
+  void btGeneric6DofSpring2Constraint([Ref] btRigidBody rbA, [Ref] btRigidBody rbB, [Ref] btTransform frameInA, [Ref] btTransform frameInB);
+  void btGeneric6DofSpring2Constraint([Ref] btRigidBody rbB, [Ref] btTransform frameInB);
+
+  void setLinearLowerLimit([Const, Ref] btVector3 linearLower);
+  void setLinearUpperLimit([Const, Ref] btVector3 linearUpper);
+  void setAngularLowerLimit([Const, Ref] btVector3 angularLower);
+  void setAngularUpperLimit([Const, Ref] btVector3 angularUpper);
+  [Const, Ref] btTransform getFrameOffsetA();
+
+  void enableSpring(long index, boolean onOff);
+  void setStiffness(long index, float stiffness);
+  void setDamping(long index, float damping);
+  void setEquilibriumPoint(long index, float val);
+  void setEquilibriumPoint(long index);
+  void setEquilibriumPoint();
+};
+btGeneric6DofSpring2Constraint implements btTypedConstraint;
+
 
 interface btSequentialImpulseConstraintSolver {
   void btSequentialImpulseConstraintSolver();
@@ -719,9 +739,9 @@ interface btDiscreteDynamicsWorld {
   long stepSimulation(float timeStep, optional long maxSubSteps, optional float fixedTimeStep);
 
 	// Contact callback support
-  void setContactAddedCallback(long funcpointer);
-  void setContactProcessedCallback(long funcpointer);
-  void setContactDestroyedCallback(long funcpointer);
+//  void setContactAddedCallback(long funcpointer);
+//  void setContactProcessedCallback(long funcpointer);
+//  void setContactDestroyedCallback(long funcpointer);
 };
 btDiscreteDynamicsWorld implements btDynamicsWorld;
 
@@ -813,7 +833,7 @@ interface btActionInterface {
     void updateAction (btCollisionWorld collisionWorld, float deltaTimeStep);
 };
 
-interface btKinematicCharacterController {
+/*interface btKinematicCharacterController {
   void btKinematicCharacterController(btPairCachingGhostObject ghostObject, btConvexShape convexShape, float stepHeight, optional long upAxis);
 
   void setUpAxis (long axis);
@@ -837,7 +857,7 @@ interface btKinematicCharacterController {
   boolean onGround ();
   void setUpInterpolate (boolean value);
 };
-btKinematicCharacterController implements btActionInterface;
+btKinematicCharacterController implements btActionInterface;*/
 
 interface btRaycastVehicle {
   void btRaycastVehicle([Const, Ref] btVehicleTuning tuning, btRigidBody chassis, btVehicleRaycaster raycaster);

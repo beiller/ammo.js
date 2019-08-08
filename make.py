@@ -138,16 +138,13 @@ def build():
     assert(os.path.exists('glue.o'))
 
     # Configure with CMake on Windows, and with configure on Unix.
-    cmake_build = emscripten.WINDOWS
+    # Update - always use CMake
+    cmake_build = True
 
     if cmake_build:
       if not os.path.exists('CMakeCache.txt'):
         stage('Configure via CMake')
-        emscripten.Building.configure([emscripten.PYTHON, os.path.join(EMSCRIPTEN_ROOT, 'emcmake'), 'cmake', '..', '-DBUILD_DEMOS=OFF', '-DBUILD_EXTRAS=OFF', '-DBUILD_CPU_DEMOS=OFF', '-DUSE_GLUT=OFF', '-DCMAKE_BUILD_TYPE=Release'])
-    else:
-      if not os.path.exists('config.h'):
-        stage('Configure (if this fails, run autogen.sh in bullet/ first)')
-        emscripten.Building.configure(['../configure', '--disable-demos','--disable-dependency-tracking'])
+	emscripten.Building.configure([emscripten.PYTHON, os.path.join(EMSCRIPTEN_ROOT, 'emcmake'), 'cmake', '..', '-DBUILD_PYBULLET=OFF', '-DUSE_DOUBLE_PRECISION=OFF', '-DBUILD_EXTRAS=OFF', '-DBUILD_CPU_DEMOS=OFF', '-DUSE_GLUT=OFF', '-DBUILD_BULLET2_DEMOS=OFF', '-DBUILD_CLSOCKET=OFF', '-DBUILD_OPENGL3_DEMOS=OFF', '-DBUILD_EGL=OFF', '-DBUILD_ENET=OFF', '-DBUILD_UNIT_TESTS=OFF', '-DCMAKE_BUILD_TYPE=Release'])
 
     stage('Make')
 
